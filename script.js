@@ -13,7 +13,8 @@ var gamePlaying = false;
 var tonePlaying = false;
 var volume = 0.5;  //must be between 0.0 and 1.0
 var guessCounter = 0;
-
+var counter = 0; //
+var patternCounter = 0;
 function startGame()
 {
   //initialize game variables
@@ -24,7 +25,7 @@ function startGame()
   // swap the Start and Stop buttons
     document.getElementById("startBtn").classList.add("hidden");
     document.getElementById("stopBtn").classList.remove("hidden");
-     playClueSequence();
+    playClueSequence();
 }
 
 function stopGame()
@@ -37,6 +38,8 @@ function stopGame()
   // swap the Start and Stop buttons
     document.getElementById("startBtn").classList.remove("hidden");
     document.getElementById("stopBtn").classList.add("hidden");
+  
+  
 }
 
 // Sound Synthesis Functions
@@ -120,8 +123,43 @@ function winGame(){
 
 function guess(btn){
   console.log("user guessed: " + btn);
+  
   if(!gamePlaying){
     return;
   }  
+  else{
+    
+    gameConsole(btn);
+  }
   // add game logic here
-}x vv
+  
+}
+
+function gameConsole(userChoice){
+ 
+  //  check if use choice is equal to pattern
+  console.log("game Console This ");
+  
+  // Is game correct? 
+  if(userChoice != pattern[patternCounter++])
+    loseGame();
+  else{
+    
+    // Is the turn over?
+    if(counter => progress){
+      
+      // Is this the last turn?
+      if(progress == pattern.length)
+        winGame();
+      else{
+        progress++;
+        playClueSequence();
+        patternCounter = 0;
+      }
+      
+    }
+    else{
+      counter++;
+    } 
+  }
+}
